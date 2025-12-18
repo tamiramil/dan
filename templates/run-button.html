@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Heyo</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="./favicon.ico" type="image/x-icon">
+</head>
+<body>
+  <button class="run-button" id="run-button" tabindex="0">Press me mf</button>
+  <script>
+    const btn = document.getElementById('run-button');
+
+    const moveButton = () => {
+      const maxX = window.innerWidth - btn.offsetWidth;
+      const maxY = window.innerHeight - btn.offsetHeight;
+
+      const randomX = Math.floor(Math.random() * maxX);
+      const randomY = Math.floor(Math.random() * maxY);
+
+      btn.style.left = `${randomX}px`;
+      btn.style.top = `${randomY}px`;
+    };
+
+    btn.addEventListener('mouseenter', moveButton);
+
+    btn.addEventListener('focus', moveButton);
+
+    btn.addEventListener('click', function() {
+      window.location.href = '/simpson';
+    });
+  </script>
+</body>
+</html>

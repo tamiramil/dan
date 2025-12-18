@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Oh fuck...</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="./favicon.ico" type="image/x-icon">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <div class="sanitar">
+    <p>Solve using Simpson 3/8</p>
+    <p>$$ \int_{0}^{3} \sqrt{1 + x^3} \, dx,$$</p>
+
+    <input type="text" id="answer" placeholder="Too decimal places!">
+    <button id="eeoneguy">Submit</button>
+
+    <p id="msg"></p>
+  </div>
+
+  <script>
+    document.getElementById('eeoneguy').addEventListener('click', async () => {
+      const answerRaw = document.getElementById('answer').value;
+      const msgDiv = document.getElementById('msg');
+
+      let answer = answerRaw.replace(',', '.').trim();
+
+      if (!answer) {
+        msgDiv.innerText = "Введите число!";
+        return;
+      }
+
+      try {
+        const response = await fetch('/verify-answer', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ answer: parseFloat(answer) })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            msgDiv.innerText = "Correct";
+            msgDiv.style.color = "#27ae60";
+            setTimeout(() => {
+                window.location.href = data.redirect_url;
+            }, 1500);
+        } else {
+            msgDiv.innerText = "Not correct!";
+            msgDiv.style.color = "#e74c3c";
+        }
+      } catch (error) {
+        msgDiv.innerText = "Че-то сервер ебнулся... :(";
+        console.error(error);
+      }
+    });
+  </script>
+</body>
+</html>
