@@ -4,13 +4,89 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Here we go</title>
+  <title>VICTORY!</title>
   <link rel="stylesheet" href="/static/style.css">
   <link rel="icon" href="./favicon.ico" type="image/x-icon">
+  <style>
+    body { margin: 0; overflow: hidden; background: #076324; } /* Зеленый цвет стола Косынки */
+    canvas { position: absolute; top: 0; left: 0; z-index: 1; }
+    .sanitar {
+      position: relative;
+      z-index: 2;
+      pointer-events: none;
+      color: white;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      font-size: 2rem;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
+  <canvas id="solitaire-canvas"></canvas>
+
   <div class="sanitar">
-    Имя адресата твоего подарка -- Фемида
+    <h1 style="color: black;">Ищи подарок для Фемиды</h1>
   </div>
+
+  <script>
+    const canvas = document.getElementById('solitaire-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const cards = [];
+    const cardWidth = 100;
+    const cardHeight = 140;
+
+    function drawCard(x, y) {
+      ctx.fillStyle = "white";
+      ctx.fillRect(x, y, cardWidth, cardHeight);
+      ctx.strokeStyle = "black";
+      ctx.strokeRect(x, y, cardWidth, cardHeight);
+      ctx.fillStyle = "#e74c3c";
+      ctx.fillRect(x + 10, y + 10, cardWidth - 20, cardHeight - 20);
+    }
+
+    class CardParticle {
+      constructor() {
+        this.x = Math.random() * (canvas.width - cardWidth);
+        this.y = 50;
+        this.vx = (Math.random() - 0.5) * 10;
+        this.vy = Math.random() * 5;
+        this.gravity = 0.5;
+        this.bounce = -0.7;
+      }
+
+      update() {
+        this.x += this.vx;
+        this.vy += this.gravity;
+        this.y += this.vy;
+
+        if (this.y + cardHeight > canvas.height) {
+          this.y = canvas.height - cardHeight;
+          this.vy *= this.bounce;
+        }
+        if (this.x <= 0 || this.x + cardWidth >= canvas.width) {
+          this.vx *= -1;
+        }
+        
+        drawCard(this.x, this.y);
+      }
+    }
+
+    function init() {
+      setInterval(() => {
+        if (cards.length < 50) cards.push(new CardParticle());
+      }, 200);
+      animate();
+    }
+
+    function animate() {
+      cards.forEach(card => card.update());
+      requestAnimationFrame(animate);
+    }
+
+    init();
+  </script>
 </body>
 </html>
