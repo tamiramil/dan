@@ -20,6 +20,10 @@ def run_button():
 def simpson():
     return render_template('simpson.html')
 
+@app.route('/speedor')
+def speedor():
+    return render_template('speedor.html')
+
 @app.route('/succex')
 def succex():
     return render_template('succex.html')
@@ -32,7 +36,7 @@ def verify_answer():
     if user_val and abs(user_val - CORRECT_ANSWER) < 0.01:
         return jsonify({
             "success": True, 
-            "redirect_url": "/succex"
+            "redirect_url": "/speedor"
         })
     else:
         return jsonify({"success": False}), 400

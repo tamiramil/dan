@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Click Speed Test!</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="./favicon.ico" type="image/x-icon">
+</head>
+<body>
+  <div class="sanitar speed-test-container">
+    <h2>Click it as fast as you can!</h2>
+    <div class="speedometer-wrapper">
+      <div class="speedometer">
+        <div class="needle" id="needle"></div>
+        <div class="speed-marks">
+          <div class="mark" style="--i:0"></div>
+          <div class="mark" style="--i:1"></div>
+          <div class="mark" style="--i:2"></div>
+          <div class="mark" style="--i:3"></div>
+          <div class="mark" style="--i:4"></div>
+          <div class="mark" style="--i:5"></div>
+          <div class="mark" style="--i:6"></div>
+          <div class="mark" style="--i:7"></div>
+          <div class="mark" style="--i:8"></div>
+          <div class="mark" style="--i:9"></div>
+          <div class="mark" style="--i:10"></div>
+        </div>
+      </div>
+    </div>
+    <button id="click-button">CLICK ME!</button>
+    <p id="cps-display">CPS: 0.00</p>
+    <p id="message"></p>
+  </div>
+
+  <script src="/static/speedometer.js"></script>
+</body>
+</html>

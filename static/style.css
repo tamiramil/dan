@@ -32,3 +32,70 @@
     top: 50%;
     left: 50%;
 }
+
+.speedometer-wrapper {
+  position: relative;
+  width: 250px; 
+  height: 125px; /* Высота ровно в два раза меньше ширины */
+  overflow: hidden; /* Теперь это правильно скроет нижнюю часть круга */
+  margin: 20px auto;
+}
+
+.speedometer {
+  position: absolute;
+  top: 0; /* Прижимаем к верху */
+  left: 0;
+  width: 250px;
+  height: 250px; /* Рисуем полный круг */
+  border-radius: 50%;
+  /* Градиент: от прозрачного (низ) к цветам (верх) */
+  background: conic-gradient(
+    from -90deg, 
+    #3498db 0deg, 
+    #2ecc71 90deg, 
+    #e74c3c 180deg, 
+    transparent 180deg
+  );
+  z-index: 1;
+}
+
+/* Внутренний круг, чтобы сделать "бублик" */
+.speedometer::after {
+  content: '';
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  width: 80%;
+  height: 80%;
+  background-color: #2c3e50;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.needle {
+  position: absolute;
+  bottom: 50%; /* Центр круга */
+  left: 50%;
+  width: 4px;
+  height: 45%; 
+  background-color: #f1c40f;
+  transform-origin: bottom center;
+  /* Начало слева (-90deg) */
+  transform: translateX(-50%) rotate(-90deg);
+  transition: transform 0.1s ease-out;
+  z-index: 10;
+  border-radius: 4px;
+}
+
+/* Центр стрелки (точка крепления) */
+.needle::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 12px;
+  background: #f1c40f;
+  border-radius: 50%;
+}
